@@ -7,7 +7,7 @@ function Footer() {
 
       <div className="mt-2 flex justify-center">
         <a
-          href="https://www.facebook.com/yousef.ahmed.awadalla"
+          href="https://www.facebook.com/yousefahmedawadalla"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook"
@@ -16,7 +16,7 @@ function Footer() {
           <i className="fab fa-facebook"></i>
         </a>
         <a
-          href="https://www.instagram.com/yusefawadalla/"
+          href="https://www.instagram.com/youssefaawadalla/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"

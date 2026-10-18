@@ -13,12 +13,12 @@ function Home() {
           Hello, I'm Youssef
         </h1>
         <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-wide mb-8 text-gray-300 drop-shadow-md">
-          Software Engineer | Full Stack Developer
+          Data Science & Artificial Intelligence Engineer
         </h2>
 
         <div className="flex justify-center items-center mb-8 space-x-4">
           <a
-            href="https://www.facebook.com/yousef.ahmed.awadalla"
+            href="https://www.facebook.com/yousefahmedawadalla"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook"
@@ -28,7 +28,7 @@ function Home() {
             <span className="sr-only">Facebook</span>
           </a>
           <a
-            href="https://www.instagram.com/yusefawadalla/"
+            href="https://www.instagram.com/youssefaawadalla/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
