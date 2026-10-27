@@ -1,87 +1,110 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+
+const navLinks = [
+  { name: "Home", path: "/" },
+  { name: "Projects", path: "/projects" },
+  { name: "About", path: "/about" },
+];
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { pathname } = useLocation();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  // Close the mobile menu after navigating
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  // Lock page scroll while the menu is open; close on Escape
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    const onKeyDown = (e) => e.key === "Escape" && setIsOpen(false);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isOpen]);
 
   return (
-    <nav className="bg-black px-10 py-6">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-xl font-bold font-serif">
-          <Link to="/">Youssef Awadalla</Link>
-        </div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/85 backdrop-blur-md">
+      <div className="container mx-auto px-6 sm:px-10 py-4 flex justify-between items-center">
+        <Link
+          to="/"
+          className="text-white text-xl md:text-2xl font-bold font-serif tracking-wider hover:text-blue-400 transition-colors duration-300"
+        >
+          Youssef Awadalla
+        </Link>
 
-        <div className="hidden md:flex space-x-10">
-          <Link
-            className="text-lg text-white hover:text-gray-400"
-            to="/projects"
-          >
-            Projects
-          </Link>
-          <Link className="text-lg text-white hover:text-gray-400" to="/about">
-            About
-          </Link>
-          <Link
-            className="text-lg text-white hover:text-gray-400"
-            to="/contact"
-          >
-            Contact
-          </Link>
-        </div>
+        <nav aria-label="Main" className="hidden md:flex items-center space-x-8">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.path;
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                aria-current={isActive ? "page" : undefined}
+                className={`relative py-1 text-base font-medium transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-400 rounded ${
+                  isActive ? "text-blue-500 font-semibold" : "text-gray-300 hover:text-white"
+                }`}
+              >
+                {link.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 rounded-full" />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
 
-        <div className="md:hidden">
-          <button
-            onClick={toggleMenu}
-            className="text-white hover:text-gray-400 focus:outline-none"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
+          className="md:hidden p-2 text-gray-300 hover:text-white rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-400"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+            />
+          </svg>
+        </button>
       </div>
 
       {isOpen && (
-        <div className="md:hidden pt-6 container mx-auto flex flex-col items-center gap-6">
-          <Link
-            className="block text-lg text-white hover:text-gray-400"
-            to="/projects"
-            onClick={toggleMenu}
-          >
-            Projects
-          </Link>
-          <Link
-            className="block text-lg text-white hover:text-gray-400"
-            to="/about"
-            onClick={toggleMenu}
-          >
-            About
-          </Link>
-          <Link
-            className="block text-lg text-white hover:text-gray-400"
-            to="/contact"
-            onClick={toggleMenu}
-          >
-            Contact
-          </Link>
-        </div>
+        <nav
+          id="mobile-menu"
+          aria-label="Mobile"
+          className="md:hidden bg-black/95 border-b border-white/10 px-6 pt-4 pb-6"
+        >
+          <div className="flex flex-col space-y-2">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`text-lg py-2.5 px-3 rounded-lg transition-colors duration-200 ${
+                    isActive
+                      ? "text-blue-500 bg-blue-500/10 font-semibold"
+                      : "text-gray-300 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
       )}
-    </nav>
+    </header>
   );
 }
 

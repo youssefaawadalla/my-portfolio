@@ -1,54 +1,27 @@
-import React from "react";
+import { FaEnvelope } from "react-icons/fa";
+import { socials, EMAIL } from "../data/socials";
 
 function Footer() {
-  return (
-    <footer className="bg-black py-3 text-center">
-      <p className="text-white text-base">&copy; 2024 - Youssef Awadalla</p>
+  const year = new Date().getFullYear();
+  const linkClass =
+    "text-white text-lg sm:text-xl transition-all duration-300 hover:-translate-y-1 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-400 rounded";
 
-      <div className="mt-2 flex justify-center">
-        <a
-          href="https://www.facebook.com/yousefahmedawadalla"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          className="mx-2 text-white text-xl transition-colors duration-300 hover:text-blue-600"
-        >
-          <i className="fab fa-facebook"></i>
-        </a>
-        <a
-          href="https://www.instagram.com/youssefaawadalla/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          className="mx-2 text-white text-xl transition-colors duration-300 hover:text-pink-600"
-        >
-          <i className="fab fa-instagram"></i>
-        </a>
-        <a
-          href="https://www.linkedin.com/in/youssef-ahmed-9a8308269/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          className="mx-2 text-white text-xl transition-colors duration-300 hover:text-blue-500"
-        >
-          <i className="fab fa-linkedin"></i>
-        </a>
-        <a
-          href="https://github.com/youssefaawadalla"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          className="mx-2 text-white text-xl transition-colors duration-300 hover:text-gray-800"
-        >
-          <i className="fab fa-github"></i>
-        </a>
-        <a
-          href="mailto:youssef.ahmed.awadalla@gmail.com"
-          aria-label="Mail"
-          className="mx-2 text-white text-xl transition-colors duration-300 hover:text-red-600"
-        >
-          <i className="fas fa-envelope"></i>
-        </a>
+  return (
+    <footer className="bg-black py-6 text-center text-gray-400">
+      <div className="container mx-auto px-4 flex flex-col items-center gap-3">
+        <div className="flex items-center justify-center gap-5">
+          {socials.map(({ name, url, icon: Icon }) => (
+            <a key={name} href={url} target="_blank" rel="noopener noreferrer" aria-label={name} className={linkClass}>
+              <Icon aria-hidden="true" />
+            </a>
+          ))}
+          <a href={`mailto:${EMAIL}`} aria-label="Email" className={linkClass}>
+            <FaEnvelope aria-hidden="true" />
+          </a>
+        </div>
+        <p className="text-sm font-light">
+          &copy; {year} <span className="font-semibold text-white">Youssef Awadalla</span>. All rights reserved.
+        </p>
       </div>
     </footer>
   );
